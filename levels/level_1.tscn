@@ -1,0 +1,334 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5hhyhl25cxuq"]
+
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_vn7o3"]
+[ext_resource type="AudioStream" uid="uid://b6autqhenvnbs" path="res://sounds/footsteps.ogg" id="2_jirdo"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ilcil"]
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3hls8"]
+data = PackedVector3Array(-10, 0.25, 10, 10, 0.25, 10, -10, -0.25, 10, 10, 0.25, 10, 10, -0.25, 10, -10, -0.25, 10, 10, 0.25, -10, -10, 0.25, -10, 10, -0.25, -10, -10, 0.25, -10, -10, -0.25, -10, 10, -0.25, -10, 10, 0.25, 10, 10, 0.25, -10, 10, -0.25, 10, 10, 0.25, -10, 10, -0.25, -10, 10, -0.25, 10, -10, 0.25, -10, -10, 0.25, 10, -10, -0.25, -10, -10, 0.25, 10, -10, -0.25, 10, -10, -0.25, -10, 10, 0.25, 10, -10, 0.25, 10, 10, 0.25, -10, -10, 0.25, 10, -10, 0.25, -10, 10, 0.25, -10, -10, -0.25, 10, 10, -0.25, 10, -10, -0.25, -10, 10, -0.25, 10, 10, -0.25, -10, -10, -0.25, -10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jirdo"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jirdo"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3hls8"]
+size = Vector3(1, 0.5, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hbghi"]
+data = PackedVector3Array(-0.5, 0.25, 0.5, 0.5, 0.25, 0.5, -0.5, -0.25, 0.5, 0.5, 0.25, 0.5, 0.5, -0.25, 0.5, -0.5, -0.25, 0.5, 0.5, 0.25, -0.5, -0.5, 0.25, -0.5, 0.5, -0.25, -0.5, -0.5, 0.25, -0.5, -0.5, -0.25, -0.5, 0.5, -0.25, -0.5, 0.5, 0.25, 0.5, 0.5, 0.25, -0.5, 0.5, -0.25, 0.5, 0.5, 0.25, -0.5, 0.5, -0.25, -0.5, 0.5, -0.25, 0.5, -0.5, 0.25, -0.5, -0.5, 0.25, 0.5, -0.5, -0.25, -0.5, -0.5, 0.25, 0.5, -0.5, -0.25, 0.5, -0.5, -0.25, -0.5, 0.5, 0.25, 0.5, -0.5, 0.25, 0.5, 0.5, 0.25, -0.5, -0.5, 0.25, 0.5, -0.5, 0.25, -0.5, 0.5, 0.25, -0.5, -0.5, -0.25, 0.5, 0.5, -0.25, 0.5, -0.5, -0.25, -0.5, 0.5, -0.25, 0.5, 0.5, -0.25, -0.5, -0.5, -0.25, -0.5)
+
+[node name="level1" type="Node3D"]
+
+[node name="Character" parent="." instance=ExtResource("1_vn7o3")]
+transform = Transform3D(1.3113417e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113417e-07, 0, 0.24717188, 0)
+floor_constant_speed = true
+base_speed = 2.0
+default_reticle = "uid://coqpusufa8a6k"
+dynamic_fov = false
+
+[node name="Mesh" parent="Character" index="0"]
+cast_shadow = 0
+
+[node name="playerLight" type="OmniLight3D" parent="Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72969246, 0)
+light_energy = 0.49
+light_volumetric_fog_energy = 12.837
+shadow_enabled = true
+shadow_bias = 1.975
+shadow_normal_bias = 0.05
+shadow_transmittance_bias = 10.769
+shadow_opacity = 0.32
+shadow_blur = 6.0
+omni_range = 8.773232
+
+[node name="footsteps" type="AudioStreamPlayer3D" parent="Character"]
+stream = ExtResource("2_jirdo")
+volume_db = -34.952
+bus = &"sfx"
+parameters/looping = false
+
+[node name="firstRoomGeometry" type="Node3D" parent="."]
+
+[node name="floor" type="MeshInstance3D" parent="firstRoomGeometry"]
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="ceiling" type="MeshInstance3D" parent="firstRoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/ceiling"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/ceiling/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="wall" type="MeshInstance3D" parent="firstRoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.5, 0, 1, -2.1855694e-08, -0.018575668, 5, -10.014725)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/wall/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="wall3" type="MeshInstance3D" parent="firstRoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.5, 0, 1, -2.1855694e-08, -0.018575668, 5, 9.985275)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/wall3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="wall2" type="MeshInstance3D" parent="firstRoomGeometry"]
+transform = Transform3D(-4.371139e-08, 1, -2.1855694e-08, 0, -4.371139e-08, -0.5, -1, -4.371139e-08, 9.553427e-16, -10.018576, 5, -0.014724731)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/wall2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="doorWall" type="MeshInstance3D" parent="firstRoomGeometry"]
+transform = Transform3D(-1.923301e-08, 1, -1.0927847e-08, 0, -4.371139e-08, -0.25, -0.44, -4.371139e-08, 4.7767137e-16, 9.981424, 2.5, 5.9852753)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/doorWall/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="doorWall2" type="MeshInstance3D" parent="firstRoomGeometry"]
+transform = Transform3D(-1.923301e-08, 1, -1.0927847e-08, 0, -4.371139e-08, -0.25, -0.44, -4.371139e-08, 4.7767137e-16, 9.981424, 2.5, -6.0147247)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/doorWall2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="doorWall3" type="MeshInstance3D" parent="firstRoomGeometry"]
+transform = Transform3D(-4.3711385e-08, 1.0000001, -1.639177e-08, 0, -4.3711392e-08, -0.375, -0.99999994, -4.3711392e-08, 7.165071e-16, 9.981424, 7.5, -0.014724731)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/doorWall3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="firstRoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 9.644723, 0)
+light_energy = 0.47
+light_specular = 7.917
+spot_range = 13.436402
+spot_angle = 77.09605
+
+[node name="Area3D" type="Area3D" parent="firstRoomGeometry"]
+transform = Transform3D(19.3044, 0, 0, 0, 9.457755, 0, 0, 0, 19.327366, -0.0020389557, 5.074178, -0.0059565306)
+audio_bus_override = true
+audio_bus_name = &"area3dReverb"
+reverb_bus_enabled = true
+reverb_bus_name = &"area3dReverb"
+reverb_bus_amount = 0.77
+
+[node name="reverbRoom" type="MeshInstance3D" parent="firstRoomGeometry/Area3D"]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+visible = false
+mesh = SubResource("BoxMesh_jirdo")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/Area3D"]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_jirdo")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="firstRoomGeometry/Area3D"]
+
+[node name="secondRoomGeometry" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 81.997, 0, 0)
+
+[node name="floor" type="MeshInstance3D" parent="secondRoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.41829252, 0, 0, 0)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="secondRoomGeometry/floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondRoomGeometry/floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="ceiling" type="MeshInstance3D" parent="secondRoomGeometry"]
+transform = Transform3D(1.0657996, 0, 0, 0, 1, 0, 0, 0, 0.41828394, 0, 5.0898457, 0)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="secondRoomGeometry/ceiling"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondRoomGeometry/ceiling/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="wall" type="MeshInstance3D" parent="secondRoomGeometry"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.25584012, 0, 1, -1.1183127e-08, -0.018577576, 2.3487496, -4.0147247)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="secondRoomGeometry/wall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondRoomGeometry/wall/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="wall3" type="MeshInstance3D" parent="secondRoomGeometry"]
+transform = Transform3D(1, 0, -1.0587912e-22, 0, -4.371139e-08, -0.2577302, 0, 1, -1.1265744e-08, -0.018577576, 2.5047836, 3.9852753)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="secondRoomGeometry/wall3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondRoomGeometry/wall3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="wall2" type="MeshInstance3D" parent="secondRoomGeometry"]
+transform = Transform3D(-1.877008e-08, 0.99999994, -1.2405927e-08, 0, -4.3711385e-08, -0.28381452, -0.4294095, -4.3711374e-08, 5.4228034e-16, -10.018684, 2.4246612, -0.014827013)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="secondRoomGeometry/wall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondRoomGeometry/wall2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="doorWall" type="MeshInstance3D" parent="secondRoomGeometry"]
+transform = Transform3D(6.1334093e-09, 1, -1.0927847e-08, 0, -4.371139e-08, -0.25, 0.14031604, -4.371138e-08, 4.776714e-16, 9.982, 2.5, 2.703)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="secondRoomGeometry/doorWall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondRoomGeometry/doorWall/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="doorWall2" type="MeshInstance3D" parent="secondRoomGeometry"]
+transform = Transform3D(-6.7446955e-09, 1, -1.0927847e-08, 0, -4.371139e-08, -0.25, -0.15430064, -4.371138e-08, 4.776714e-16, 9.981422, 2.5, -2.8870544)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="secondRoomGeometry/doorWall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondRoomGeometry/doorWall2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="doorWall3" type="MeshInstance3D" parent="secondRoomGeometry"]
+transform = Transform3D(-7.7830205e-09, 1.0000001, -2.9731773e-09, 0, -4.3711392e-08, -0.06801837, -0.17805474, -4.371139e-08, 1.2996172e-16, 9.982, 4.424, -0.015)
+mesh = SubResource("BoxMesh_ilcil")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="secondRoomGeometry/doorWall3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="secondRoomGeometry/doorWall3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_3hls8")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="secondRoomGeometry"]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -9.420975, 2.7138338, -3.9575384e-06)
+light_color = Color(1, 0, 0, 1)
+light_energy = 6.113
+light_specular = 1.902
+omni_range = 24.186235
+
+[node name="SpotLight3D" type="SpotLight3D" parent="secondRoomGeometry"]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -9.95578, 2.0016246, -3.8874073e-06)
+light_color = Color(1.1565268, 0, 0, 1)
+light_energy = 8.753
+light_specular = 7.175
+spot_range = 143.64616
+spot_angle = 9.479445
+
+[node name="hallwayGeometry" type="Node3D" parent="."]
+
+[node name="floor" type="MeshInstance3D" parent="hallwayGeometry"]
+transform = Transform3D(62.688602, 0, 0, 0, 1, 0, 0, 0, 3, 41.235737, 0, 0)
+gi_mode = 0
+mesh = SubResource("BoxMesh_3hls8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hallwayGeometry/floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hallwayGeometry/floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_hbghi")
+
+[node name="floor2" type="MeshInstance3D" parent="hallwayGeometry"]
+transform = Transform3D(62.11973, 0, 0, 0, 1, 0, 0, 0, 3, 41.195995, 4, 0)
+gi_mode = 0
+mesh = SubResource("BoxMesh_3hls8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hallwayGeometry/floor2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hallwayGeometry/floor2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_hbghi")
+
+[node name="wall" type="MeshInstance3D" parent="hallwayGeometry"]
+transform = Transform3D(62.53, 0, 0, 0, -4.371139e-08, -5.793, 0, 1, -2.532201e-07, 40.999, 1, 1.47)
+gi_mode = 0
+mesh = SubResource("BoxMesh_3hls8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hallwayGeometry/wall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hallwayGeometry/wall/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_hbghi")
+
+[node name="wall2" type="MeshInstance3D" parent="hallwayGeometry"]
+transform = Transform3D(62.53, 0, 0, 0, -4.371139e-08, -5.793, 0, 1, -2.532201e-07, 40.999, 1, -1.53)
+gi_mode = 0
+mesh = SubResource("BoxMesh_3hls8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hallwayGeometry/wall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hallwayGeometry/wall2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_hbghi")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="hallwayGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.052395, 1.8300037, 0.08323911)
+visible = false
+light_color = Color(1, 0, 0, 1)
+light_energy = 1.96
+light_indirect_energy = 1.72
+light_volumetric_fog_energy = 6.151
+omni_range = 31.14538
+omni_attenuation = 0.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="hallwayGeometry"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 35.847996, 2.7138338, 0)
+visible = false
+light_color = Color(1.1565268, 0, 0, 1)
+light_energy = 3.062
+light_specular = 5.278
+spot_range = 46.18725
+spot_angle = 9.411225
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="hallwayGeometry"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 23.519484, 2.0217366, 0)
+light_color = Color(1.1565268, 0, 0, 1)
+light_energy = 4.712
+light_specular = 1.237
+shadow_enabled = true
+shadow_bias = 6.183
+shadow_normal_bias = 1.567
+shadow_transmittance_bias = -1.345
+shadow_opacity = 0.71
+shadow_blur = 10.0
+spot_range = 46.18725
+spot_angle = 11.405525
+
+[editable path="Character"]
