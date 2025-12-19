@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5hhyhl25cxuq"]
+[gd_scene load_steps=11 format=3 uid="uid://b5hhyhl25cxuq"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_vn7o3"]
 [ext_resource type="AudioStream" uid="uid://b6autqhenvnbs" path="res://sounds/footsteps.ogg" id="2_jirdo"]
+[ext_resource type="PackedScene" uid="uid://bqnlrmmmdqr5q" path="res://sounds/SpatialAudioPlayer3D.tscn" id="2_kx6l7"]
+[ext_resource type="Script" uid="uid://bgcx0qotnixov" path="res://sounds/SpatialAudioPlayer3D.gd" id="3_bt44k"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ilcil"]
 size = Vector3(20, 0.5, 20)
@@ -44,11 +46,14 @@ shadow_opacity = 0.32
 shadow_blur = 6.0
 omni_range = 8.773232
 
-[node name="footsteps" type="AudioStreamPlayer3D" parent="Character"]
+[node name="footsteps" type="AudioStreamPlayer3D" parent="Character" instance=ExtResource("2_kx6l7")]
 stream = ExtResource("2_jirdo")
 volume_db = -34.952
 bus = &"sfx"
 parameters/looping = false
+script = ExtResource("3_bt44k")
+max_raycast_distance = 50.0
+metadata/_custom_type_script = "uid://bgcx0qotnixov"
 
 [node name="firstRoomGeometry" type="Node3D" parent="."]
 
@@ -56,7 +61,7 @@ parameters/looping = false
 mesh = SubResource("BoxMesh_ilcil")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/floor" groups=["STONE"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/floor/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_3hls8")
@@ -66,7 +71,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 mesh = SubResource("BoxMesh_ilcil")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/ceiling"]
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/ceiling" groups=["STONE"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/ceiling/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_3hls8")
@@ -76,7 +81,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.5, 0, 1, -2.1855694e-08, -
 mesh = SubResource("BoxMesh_ilcil")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall"]
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall" groups=["STONE"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/wall/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_3hls8")
@@ -86,7 +91,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.5, 0, 1, -2.1855694e-08, -
 mesh = SubResource("BoxMesh_ilcil")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall3" groups=["STONE"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/wall3/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_3hls8")
@@ -96,7 +101,7 @@ transform = Transform3D(-4.371139e-08, 1, -2.1855694e-08, 0, -4.371139e-08, -0.5
 mesh = SubResource("BoxMesh_ilcil")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/wall2" groups=["STONE"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/wall2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_3hls8")
@@ -106,7 +111,7 @@ transform = Transform3D(-1.923301e-08, 1, -1.0927847e-08, 0, -4.371139e-08, -0.2
 mesh = SubResource("BoxMesh_ilcil")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall"]
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall" groups=["STONE"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/doorWall/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_3hls8")
@@ -116,7 +121,7 @@ transform = Transform3D(-1.923301e-08, 1, -1.0927847e-08, 0, -4.371139e-08, -0.2
 mesh = SubResource("BoxMesh_ilcil")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall2" groups=["STONE"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/doorWall2/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_3hls8")
@@ -126,7 +131,7 @@ transform = Transform3D(-4.3711385e-08, 1.0000001, -1.639177e-08, 0, -4.3711392e
 mesh = SubResource("BoxMesh_ilcil")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="firstRoomGeometry/doorWall3" groups=["STONE"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="firstRoomGeometry/doorWall3/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_3hls8")
@@ -140,11 +145,10 @@ spot_angle = 77.09605
 
 [node name="Area3D" type="Area3D" parent="firstRoomGeometry"]
 transform = Transform3D(19.3044, 0, 0, 0, 9.457755, 0, 0, 0, 19.327366, -0.0020389557, 5.074178, -0.0059565306)
-audio_bus_override = true
 audio_bus_name = &"area3dReverb"
 reverb_bus_enabled = true
 reverb_bus_name = &"area3dReverb"
-reverb_bus_amount = 0.77
+reverb_bus_amount = 1.0
 
 [node name="reverbRoom" type="MeshInstance3D" parent="firstRoomGeometry/Area3D"]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
